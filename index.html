@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibrador de Válvulas Profesional - Shims</title>
+    <!-- Tailwind CSS para diseño moderno, adaptativo y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos de Google Font para una interfaz limpia -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Animaciones fluidas para modales y cajones flotantes en móviles */
+        .modal-transition {
+            transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+        }
+        /* Estilizar barra de scroll táctil para facilitar el deslizamiento de la culata */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #0891b2;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-900">
+
+    <!-- Encabezado / Navbar -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-40 shadow-md">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="material-icons text-cyan-400 text-3xl">build_circle</span>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white">RECTI-VALVE PRO</h1>
+                    <p class="text-xs text-slate-400">Ajuste de Shims & Tolerancias</p>
+                </div>
+            </div>
+            <!-- Botones de Acción (Compartir y Reiniciar) -->
+            <div class="flex items-center gap-2">
+                <button onclick="openShareModal()" class="flex items-center gap-1 bg-cyan-950 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition active:scale-95">
+                    <span class="material-icons text-sm">share</span> Compartir
+                </button>
+                <button onclick="openConfirmResetModal()" class="flex items-center gap-1 bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition active:scale-95">
+                    <span class="material-icons text-sm">restart_alt</span> Reiniciar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-5 flex flex-col gap-6">
+
+        <!-- Panel de Configuración Rápida -->
+        <section class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+            <h2 class="text-xs font-bold tracking-wider text-slate-400 uppercase mb-3 flex items-center gap-1">
+                <span class="material-icons text-sm">settings</span> Configuración del Motor
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Selector de Cilindros (Soporta de 3 a 6 cilindros) -->
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1.5 font-medium">Cantidad de Cilindros</label>
+                    <div class="grid grid-cols-4 bg-slate-950 p-1 rounded-lg border border-slate-800">
+                        <button onclick="setGridCylinders(3)" id="btn-cyl-3" class="py-2 text-sm font-bold rounded-md transition duration-150">3</button>
+                        <button onclick="setGridCylinders(4)" id="btn-cyl-4" class="py-2 text-sm font-bold rounded-md transition duration-150">4</button>
+                        <button onclick="setGridCylinders(5)" id="btn-cyl-5" class="py-2 text-sm font-bold rounded-md transition duration-150">5</button>
+                        <button onclick="setGridCylinders(6)" id="btn-cyl-6" class="py-2 text-sm font-bold rounded-md transition duration-150">6</button>
+                    </div>
+                </div>
+
+                <!-- Objetivos de Calibración -->
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Objetivo Admisión (Target)</label>
+                    <div class="relative">
+                        <input type="number" id="input-target-adm" step="0.001" value="0.010" onchange="updateTargets()" class="w-full bg-slate-950 border border-slate-800 rounded-lg py-2 pl-3 pr-10 text-sm font-mono text-cyan-400 focus:outline-none focus:border-cyan-500">
+                        <span class="absolute right-3 top-2.5 text-xs text-slate-500">pulg</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Objetivo Escape (Target)</label>
+                    <div class="relative">
+                        <input type="number" id="input-target-esc" step="0.001" value="0.012" onchange="updateTargets()" class="w-full bg-slate-950 border border-slate-800 rounded-lg py-2 pl-3 pr-10 text-sm font-mono text-cyan-400 focus:outline-none focus:border-cyan-500">
+                        <span class="absolute right-3 top-2.5 text-xs text-slate-500">pulg</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerta informativa de especificación técnica -->
+            <div class="mt-4 p-3 bg-cyan-950/30 border border-cyan-900/50 rounded-lg flex gap-2.5">
+                <span class="material-icons text-cyan-400 text-base flex-shrink-0 mt-0.5">info</span>
+                <p class="text-xs text-cyan-200/90 leading-relaxed">
+                    <strong>Nota del Rectificador:</strong> Rango seguro de operación: <span class="font-bold text-white">0.008" a 0.014"</span>. 
+                    Por especificación general, lo ideal es dejar Escape en <span class="font-bold text-white">.010"</span> y Admisión en <span class="font-bold text-white">.008"</span>, pero puedes cambiar los objetivos arriba según el manual del motor.
+                </p>
+            </div>
+        </section>
+
+        <!-- Representación Física de la Cabeza del Motor -->
+        <section class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-bold text-white tracking-wide">Culata / Cabeza de Motor</h2>
+                <!-- Indicador del Frente del Motor -->
+                <div class="flex items-center gap-1 text-xs text-cyan-400 font-bold bg-cyan-950/50 border border-cyan-800 px-2.5 py-1 rounded-full animate-pulse">
+                    <span class="material-icons text-xs">arrow_back</span> FRENTE DEL MOTOR
+                </div>
+            </div>
+
+            <!-- Tablero de Válvulas con Scrollbar personalizado -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-x-auto shadow-inner custom-scrollbar">
+                <div class="min-w-[850px] flex flex-col gap-6" id="engine-layout-container">
+                    <!-- Filas de Válvulas (Se generan por JS) -->
+                    <div id="exhaust-row" class="flex justify-around items-center gap-4 relative">
+                        <!-- Línea de Escape arriba -->
+                    </div>
+                    
+                    <!-- Línea Divisoria Física (Árboles de levas / bujías) -->
+                    <div class="border-t border-dashed border-slate-800 relative flex justify-center">
+                        <span class="absolute -top-3 bg-slate-900 px-3 text-[10px] text-slate-500 tracking-widest uppercase font-mono">Bujías / Centro de Cámara</span>
+                    </div>
+
+                    <div id="intake-row" class="flex justify-around items-center gap-4 relative">
+                        <!-- Línea de Admisión abajo -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leyenda de Estados y Código de Colores -->
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-slate-800 flex-shrink-0"></span>
+                <span class="text-xs text-slate-400 font-medium">Pendiente / Sin Medir</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500 flex-shrink-0"></span>
+                <span class="text-xs text-slate-400 font-medium">Baja / Pisada (&lt; 0.008")</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                <span class="text-xs text-slate-400 font-medium">Rango Seguro (0.008"-0.014")</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0"></span>
+                <span class="text-xs text-slate-400 font-medium">Alta / Ruidosa (&gt; 0.014")</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Compartir / Instrucciones -->
+    <div id="share-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="closeShareModal()"></div>
+        <div class="relative bg-slate-900 border border-slate-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-6 shadow-2xl modal-transition translate-y-full sm:translate-y-0">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-cyan-400 text-2xl">share</span>
+                    <h3 class="text-base font-bold text-white">¿Cómo tener y compartir la app?</h3>
+                </div>
+                <button onclick="closeShareModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="text-xs text-slate-300 flex flex-col gap-3 leading-relaxed">
+                <p>Esta aplicación es un <strong>único archivo autónomo</strong>. No necesita bases de datos ni servidores complejos, ¡funciona incluso sin internet!</p>
+                
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col gap-2">
+                    <span class="font-bold text-white uppercase text-[10px] tracking-wider text-cyan-400">Opción 1: Enviar el archivo directo</span>
+                    <p>1. Descarga el archivo <code>index.html</code> de tu repositorio.</p>
+                    <p>2. Envíalo directamente por <strong>WhatsApp, Telegram o Correo</strong> a quien quieras.</p>
+                    <p>3. ¡Al abrir el archivo en cualquier teléfono o computadora, la app se iniciará al instante!</p>
+                </div>
+
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col gap-2">
+                    <span class="font-bold text-white uppercase text-[10px] tracking-wider text-cyan-400">Opción 2: Tener un enlace de internet (Recomendado)</span>
+                    <p>Subir este archivo a <strong>GitHub Pages</strong> o <strong>Netlify</strong> te otorgará un enlace personalizado y gratuito para abrirlo con un solo toque.</p>
+                </div>
+            </div>
+            <button onclick="closeShareModal()" class="w-full mt-4 py-2.5 bg-slate-800 hover:bg-slate-750 text-slate-300 text-xs font-bold rounded-xl transition">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Reiniciar -->
+    <div id="confirm-reset-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="closeConfirmResetModal()"></div>
+        <div class="relative bg-slate-900 border border-slate-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-xs p-6 shadow-2xl modal-transition translate-y-full sm:translate-y-0">
+            <h3 class="text-base font-bold text-white mb-2">¿Limpiar mediciones?</h3>
+            <p class="text-xs text-slate-400 mb-4">Esto borrará todas las holguras y shims que has capturado en esta sesión.</p>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="closeConfirmResetModal()" class="py-2.5 bg-slate-800 text-slate-300 text-xs font-bold rounded-xl transition">Cancelar</button>
+                <button onclick="confirmResetAll()" class="py-2.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-xl transition">Sí, borrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Flotante (Drawer para Móviles y Modificación de Válvulas) -->
+    <div id="valve-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+        <!-- Fondo oscuro -->
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        
+        <!-- Tarjeta del Modal -->
+        <div class="relative bg-slate-900 border-t sm:border border-slate-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-6 shadow-2xl modal-transition translate-y-full sm:translate-y-0 sm:scale-95">
+            
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span id="modal-valve-icon" class="material-icons text-2xl">local_fire_department</span>
+                    <div>
+                        <h3 class="text-base font-bold text-white" id="modal-valve-id">Válvula E1-1</h3>
+                        <p class="text-xs text-slate-400" id="modal-valve-desc">Línea de Escape — Cilindro 1</p>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <!-- Información de objetivo -->
+                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 flex justify-between text-xs">
+                    <span class="text-slate-400">Holgura de diseño (Objetivo):</span>
+                    <span class="font-mono text-cyan-400 font-bold" id="modal-valve-target">0.012"</span>
+                </div>
+
+                <!-- Input Holgura Medida -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1 uppercase tracking-wider">Holgura Medida actual</label>
+                    <div class="relative">
+                        <input type="number" id="input-measured" placeholder="Escribe 12 o 0.012" step="0.001" class="w-full bg-slate-950 border border-slate-700 rounded-xl py-3 px-4 text-lg font-mono text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+                        <span class="absolute right-4 top-3 text-sm text-slate-400 font-mono">pulg</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1">Tip: Puedes meter números enteros (ej: "10" equivale a "0.010")</p>
+                </div>
+
+                <!-- Input Shim Actual -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1 uppercase tracking-wider">Espesor del Shim Actual <span class="text-slate-500 font-normal">(Opcional)</span></label>
+                    <div class="relative">
+                        <input type="number" id="input-shim" placeholder="Escribe 115 o 0.115" step="0.001" class="w-full bg-slate-950 border border-slate-700 rounded-xl py-3 px-4 text-lg font-mono text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+                        <span class="absolute right-4 top-3 text-sm text-slate-400 font-mono">pulg</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1">Para calcular el nuevo shim exacto que debes colocar.</p>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <button onclick="closeModal()" class="py-3 bg-slate-800 hover:bg-slate-750 text-slate-300 text-sm font-bold rounded-xl transition">
+                        Cancelar
+                    </button>
+                    <button onclick="saveValveData()" class="py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-sm font-bold rounded-xl transition shadow-lg shadow-cyan-500/10 active:scale-[0.98]">
+                        Guardar Ajuste
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer con firma de herramienta del taller -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center mt-auto">
+        <p class="text-xs text-slate-500">Diseñado especialmente para Tablets y Teléfonos Inteligentes en talleres de rectificación.</p>
+    </footer>
+
+    <!-- Lógica JavaScript Dinámica de la App -->
+    <script>
+        // Variables globales de estado
+        let activeCylinders = 4;
+        let targetAdmision = 0.010;
+        let targetEscape = 0.012;
+        let selectedValveId = null;
+
+        // Base de datos de válvulas en memoria
+        let valvesState = {};
+
+        // Inicializar al cargar el documento
+        window.onload = function() {
+            setGridCylinders(4);
+        };
+
+        // Cambiar cantidad de cilindros y rediseñar cabezal
+        function setGridCylinders(num) {
+            activeCylinders = num;
+            
+            // Actualizar botones de opción visualmente (Soporta 3, 4, 5, 6)
+            [3, 4, 5, 6].forEach(n => {
+                const btn = document.getElementById(`btn-cyl-${n}`);
+                if (n === num) {
+                    btn.className = "py-2 text-sm font-bold rounded-md bg-cyan-500 text-slate-950 shadow-md transition";
+                } else {
+                    btn.className = "py-2 text-sm font-bold rounded-md text-slate-400 hover:text-white transition";
+                }
+            });
+
+            // Generar nuevo mapa de válvulas si no existe
+            buildEngineLayout();
+        }
+
+        // Leer objetivos de los campos de entrada
+        function updateTargets() {
+            targetAdmision = normalizeMeasurement(document.getElementById('input-target-adm').value);
+            targetEscape = normalizeMeasurement(document.getElementById('input-target-esc').value);
+            
+            // Recalcular válvulas existentes con los nuevos objetivos
+            Object.keys(valvesState).forEach(id => {
+                const v = valvesState[id];
+                v.target = v.type === 'ESCAPE' ? targetEscape : targetAdmision;
+                recalculateValve(id);
+            });
+
+            buildEngineLayout();
+        }
+
+        // Normalizador inteligente: convierte enteros "10" a decimales "0.010"
+        function normalizeMeasurement(val) {
+            let parsed = parseFloat(val);
+            if (isNaN(parsed) || parsed <= 0) return 0;
+            // Si el usuario escribe algo como 8, 10, 12 o 120, se asume que son milésimas de pulgada
+            if (parsed >= 1) {
+                return parsed / 1000;
+            }
+            return parsed;
+        }
+
+        // Construir la matriz visual de la culata (Escape arriba, Admisión abajo)
+        function buildEngineLayout() {
+            const exhaustRow = document.getElementById('exhaust-row');
+            const intakeRow = document.getElementById('intake-row');
+
+            exhaustRow.innerHTML = '';
+            intakeRow.innerHTML = '';
+
+            // Generar cilindro a cilindro (del 1 al total de cilindros)
+            for (let cyl = 1; cyl <= activeCylinders; cyl++) {
+                
+                // --- LINEA DE ESCAPE (2 válvulas por cilindro) ---
+                const escapeGroup = document.createElement('div');
+                escapeGroup.className = "flex gap-2 p-2 bg-slate-950/40 border border-slate-800 rounded-xl relative";
+                escapeGroup.innerHTML = `<span class="absolute -top-2.5 left-3 bg-slate-900 px-1 text-[8px] font-bold text-slate-500">CIL ${cyl}</span>`;
+
+                for (let v = 1; v <= 2; v++) {
+                    const id = `E${v}-${cyl}`;
+                    if (!valvesState[id]) {
+                        valvesState[id] = { id, type: 'ESCAPE', cyl, target: targetEscape, measured: 0, currentShim: 0, adjustment: 0, newShim: 0 };
+                    }
+                    escapeGroup.appendChild(createValveElement(valvesState[id]));
+                }
+                exhaustRow.appendChild(escapeGroup);
+
+                // --- LINEA DE ADMISIÓN (2 válvulas por cilindro) ---
+                const intakeGroup = document.createElement('div');
+                intakeGroup.className = "flex gap-2 p-2 bg-slate-950/40 border border-slate-800 rounded-xl relative";
+                intakeGroup.innerHTML = `<span class="absolute -bottom-2.5 left-3 bg-slate-900 px-1 text-[8px] font-bold text-slate-500">CIL ${cyl}</span>`;
+
+                for (let v = 1; v <= 2; v++) {
+                    const id = `A${v}-${cyl}`;
+                    if (!valvesState[id]) {
+                        valvesState[id] = { id, type: 'ADMISIÓN', cyl, target: targetAdmision, measured: 0, currentShim: 0, adjustment: 0, newShim: 0 };
+                    }
+                    intakeGroup.appendChild(createValveElement(valvesState[id]));
+                }
+                intakeRow.appendChild(intakeGroup);
+            }
+        }
+
+        // Crear una tarjeta de válvula interactiva
+        function createValveElement(v) {
+            const el = document.createElement('button');
+            el.onclick = () => openModal(v.id);
+            
+            // Determinar color de estado basado en la medida actual
+            let cardBg = "bg-slate-900 hover:bg-slate-800 border-slate-800";
+            let statusText = "PENDIENTE";
+            let textColor = "text-slate-400";
+            let accentColor = "border-slate-800";
+
+            if (v.measured > 0) {
+                if (v.measured < 0.008) {
+                    cardBg = "bg-rose-950/30 hover:bg-rose-950/50 border-rose-800/80";
+                    statusText = "PISADA";
+                    textColor = "text-rose-400";
+                    accentColor = "border-rose-900";
+                } else if (v.measured > 0.014) {
+                    cardBg = "bg-amber-950/30 hover:bg-amber-950/50 border-amber-800/80";
+                    statusText = "RUIDOSA";
+                    textColor = "text-amber-400";
+                    accentColor = "border-amber-900";
+                } else {
+                    cardBg = "bg-emerald-950/20 hover:bg-emerald-950/40 border-emerald-800/80";
+                    statusText = "OK";
+                    textColor = "text-emerald-400";
+                    accentColor = "border-emerald-900";
+                }
+            }
+
+            el.className = `w-28 h-32 rounded-xl border flex flex-col p-2.5 text-left transition active:scale-95 ${cardBg} ${accentColor} justify-between shadow-sm`;
+
+            // Construcción del contenido interno del elemento válvula
+            el.innerHTML = `
+                <div class="flex justify-between items-start w-full">
+                    <span class="text-xs font-mono font-bold text-white">${v.id}</span>
+                    <span class="text-[9px] px-1 py-0.5 rounded font-bold uppercase tracking-wider ${textColor}">${statusText}</span>
+                </div>
+                
+                <div class="my-1.5">
+                    <span class="text-[10px] block text-slate-500 uppercase leading-none font-medium">Medida:</span>
+                    <span class="text-base font-mono font-bold text-white">${v.measured > 0 ? v.measured.toFixed(3) + '"' : '--'}</span>
+                </div>
+
+                <div class="text-[10px] border-t border-slate-800/80 pt-1 w-full flex flex-col">
+                    ${getAdjustmentDescriptionHTML(v)}
+                </div>
+            `;
+            return el;
+        }
+
+        // Helper para mostrar texto de ajuste exacto en la celda
+        function getAdjustmentDescriptionHTML(v) {
+            if (v.measured === 0) return `<span class="text-slate-600 italic">Toca p/ medir</span>`;
+            
+            const diff = v.adjustment;
+            if (diff === 0) return `<span class="text-emerald-400 font-bold">Perfecta</span>`;
+
+            const absDiff = Math.abs(diff).toFixed(3);
+            if (diff < 0) {
+                return `
+                    <span class="text-rose-400 font-bold leading-none">Rebajar</span>
+                    <span class="font-mono text-[9px] text-rose-300">-${absDiff}"</span>
+                `;
+            } else {
+                return `
+                    <span class="text-amber-400 font-bold leading-none">Aumentar</span>
+                    <span class="font-mono text-[9px] text-amber-300">+${absDiff}"</span>
+                `;
+            }
+        }
+
+        // Recalcular matemática por cada cambio
+        function recalculateValve(id) {
+            const v = valvesState[id];
+            if (v.measured > 0) {
+                // Ajuste = Holgura actual - Objetivo ideal
+                v.adjustment = v.measured - v.target;
+                
+                if (v.currentShim > 0) {
+                    v.newShim = v.currentShim + v.adjustment;
+                } else {
+                    v.newShim = 0;
+                }
+            } else {
+                v.adjustment = 0;
+                v.newShim = 0;
+            }
+        }
+
+        // --- LÓGICA DE CONTROL DEL MODAL ---
+
+        function openModal(id) {
+            selectedValveId = id;
+            const v = valvesState[id];
+
+            // Rellenar datos
+            document.getElementById('modal-valve-id').innerText = `Válvula ${v.id}`;
+            document.getElementById('modal-valve-desc').innerText = `${v.type} — Cilindro ${v.cyl}`;
+            document.getElementById('modal-valve-target').innerText = `${v.target.toFixed(3)}"`;
+            
+            // Iconos descriptivos
+            const iconEl = document.getElementById('modal-valve-icon');
+            if (v.type === 'ESCAPE') {
+                iconEl.innerText = "local_fire_department";
+                iconEl.className = "material-icons text-2xl text-amber-500";
+            } else {
+                iconEl.innerText = "air";
+                iconEl.className = "material-icons text-2xl text-cyan-400";
+            }
+
+            // Inyectar valores existentes
+            document.getElementById('input-measured').value = v.measured > 0 ? (v.measured * 1000).toFixed(0) : '';
+            document.getElementById('input-shim').value = v.currentShim > 0 ? (v.currentShim * 1000).toFixed(0) : '';
+
+            // Mostrar el modal con transiciones
+            const modal = document.getElementById('valve-modal');
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('opacity-100');
+
+            const card = modal.querySelector('.modal-transition');
+            card.classList.remove('translate-y-full', 'sm:scale-95');
+            card.classList.add('translate-y-0', 'sm:scale-100');
+
+            // Foco automático en el primer input para agilizar captura
+            setTimeout(() => {
+                document.getElementById('input-measured').focus();
+            }, 100);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('valve-modal');
+            modal.classList.add('pointer-events-none');
+            modal.classList.remove('opacity-100');
+
+            const card = modal.querySelector('.modal-transition');
+            card.classList.add('translate-y-full', 'sm:scale-95');
+            card.classList.remove('translate-y-0', 'sm:scale-100');
+            
+            selectedValveId = null;
+        }
+
+        // Guardar valores del modal en la base de datos local
+        function saveValveData() {
+            if (!selectedValveId) return;
+
+            const measuredInput = document.getElementById('input-measured').value;
+            const shimInput = document.getElementById('input-shim').value;
+
+            const v = valvesState[selectedValveId];
+
+            v.measured = normalizeMeasurement(measuredInput);
+            v.currentShim = normalizeMeasurement(shimInput);
+
+            recalculateValve(selectedValveId);
+            buildEngineLayout();
+            closeModal();
+        }
+
+        // --- LÓGICA DE COMPARTIR Y REINICIAR ---
+
+        function openShareModal() {
+            const modal = document.getElementById('share-modal');
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('opacity-100');
+            const card = modal.querySelector('.modal-transition');
+            card.classList.remove('translate-y-full');
+            card.classList.add('translate-y-0');
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('share-modal');
+            modal.classList.add('pointer-events-none');
+            modal.classList.remove('opacity-100');
+            const card = modal.querySelector('.modal-transition');
+            card.classList.add('translate-y-full');
+            card.classList.remove('translate-y-0');
+        }
+
+        function openConfirmResetModal() {
+            const modal = document.getElementById('confirm-reset-modal');
+            modal.classList.remove('pointer-events-none');
+            modal.classList.add('opacity-100');
+            const card = modal.querySelector('.modal-transition');
+            card.classList.remove('translate-y-full');
+            card.classList.add('translate-y-0');
+        }
+
+        function closeConfirmResetModal() {
+            const modal = document.getElementById('confirm-reset-modal');
+            modal.classList.add('pointer-events-none');
+            modal.classList.remove('opacity-100');
+            const card = modal.querySelector('.modal-transition');
+            card.classList.add('translate-y-full');
+            card.classList.remove('translate-y-0');
+        }
+
+        function confirmResetAll() {
+            valvesState = {};
+            buildEngineLayout();
+            closeConfirmResetModal();
+        }
+    </script>
+</body>
+</html>
