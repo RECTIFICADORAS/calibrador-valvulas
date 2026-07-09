@@ -17,6 +17,10 @@
         .modal-transition {
             transition: transform 0.25s ease-out, opacity 0.25s ease-out;
         }
+        /* Pantalla de inicio (Splash Screen) */
+        #splash-screen {
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
         /* Estilizar barra de scroll táctil para facilitar el deslizamiento de la culata */
         .custom-scrollbar::-webkit-scrollbar {
             height: 6px;
@@ -34,6 +38,32 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-900">
+
+    <!-- Pantalla Introductoria / Splash Screen (6 segundos de duración) -->
+    <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-4 overflow-y-auto">
+        <div class="max-w-2xl w-full flex flex-col items-center text-center gap-6">
+            <!-- Imagen de presentación con las herramientas del rectificador y cabeza de 16v -->
+            <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-cyan-500/10 max-h-[45vh] md:max-h-[55vh] aspect-video w-full">
+                <img src="watermarked_img_6619140593829222485.png" alt="Herramientas de rectificación y cabeza de válvulas" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+            </div>
+            
+            <div class="space-y-1">
+                <h2 class="text-2xl font-black tracking-widest text-cyan-400">RECTI-VALVE PRO</h2>
+                <p class="text-xs text-slate-400 uppercase tracking-widest">Tecnología y Precisión para el Rectificador de Motores</p>
+            </div>
+
+            <!-- Barra de progreso de 6 segundos -->
+            <div class="w-64 h-1 bg-slate-900 rounded-full overflow-hidden border border-slate-800/80 relative">
+                <div id="splash-progress" class="h-full bg-cyan-400 rounded-full transition-all duration-[6000ms] ease-out w-0"></div>
+            </div>
+
+            <!-- Botón para omitir si el mecánico está de prisa -->
+            <button onclick="dismissSplash()" class="text-slate-500 hover:text-cyan-400 text-[10px] font-bold tracking-widest uppercase transition hover:scale-105 px-4 py-2 rounded-lg bg-slate-900/50 border border-slate-800/50 active:scale-95">
+                Omitir Introducción
+            </button>
+        </div>
+    </div>
 
     <!-- Encabezado / Navbar -->
     <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-40 shadow-md">
@@ -281,10 +311,30 @@
         // Base de datos de válvulas en memoria
         let valvesState = {};
 
-        // Inicializar al cargar el documento
+        // Inicializar al cargar el documento con control de Splash Screen
         window.onload = function() {
+            // Cargar la configuración de culata predeterminada
             setGridCylinders(4);
+            
+            // Iniciar la animación de la barra de progreso del splash screen
+            setTimeout(() => {
+                const progress = document.getElementById('splash-progress');
+                if (progress) progress.style.width = '100%';
+            }, 100);
+
+            // Desvanecer splash screen automáticamente después de 6 segundos (6000ms)
+            setTimeout(dismissSplash, 6000);
         };
+
+        // Función para cerrar la pantalla introductoria con un desvanecimiento suave
+        function dismissSplash() {
+            const splash = document.getElementById('splash-screen');
+            if (splash && !splash.classList.contains('opacity-0')) {
+                splash.classList.add('opacity-0', 'pointer-events-none');
+                // Eliminar completamente del DOM después de terminar la transición CSS (0.8s)
+                setTimeout(() => splash.remove(), 800);
+            }
+        }
 
         // Cambiar cantidad de cilindros y rediseñar cabezal
         function setGridCylinders(num) {
