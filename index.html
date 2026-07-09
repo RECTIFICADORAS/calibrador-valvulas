@@ -40,12 +40,6 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-900">
 
     <!-- Pantalla Introductoria / Splash Screen (6 segundos de duración) -->
-
-    
-    <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-4 overflow-y-auto">
-        <div class="max-w-2xl w-full flex flex-col items-center text-center gap-6">
-<!-- ... existing code ... -->
-    <!-- Pantalla Introductoria / Splash Screen (6 segundos de duración) -->
     <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-4 overflow-y-auto">
         <div class="max-w-2xl w-full flex flex-col items-center text-center gap-6">
             
@@ -55,19 +49,6 @@
                 <h1 class="text-lg sm:text-xl font-extrabold tracking-wide text-slate-200 uppercase">Ajuste y Cálculo de Holguras de Válvulas</h1>
             </div>
 
-            <!-- Imagen de presentación con las herramientas del rectificador y cabeza de 16v -->
-            <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-cyan-500/10 max-h-[45vh] md:max-h-[55vh] aspect-video w-full">
-                <img src="watermarked_img_6619140593829222485.png" alt="Herramientas de rectificación y cabeza de válvulas" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
-            </div>
-            
-            <div class="space-y-1">
-                <h2 class="text-2xl font-black tracking-widest text-cyan-400">RECTI-VALVE PRO</h2>
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Tecnología y Precisión para el Rectificador de Motores</p>
-            </div>
-<!-- ... existing code ... -->
-
-            
             <!-- Imagen de presentación con las herramientas del rectificador y cabeza de 16v -->
             <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-cyan-500/10 max-h-[45vh] md:max-h-[55vh] aspect-video w-full">
                 <img src="watermarked_img_6619140593829222485.png" alt="Herramientas de rectificación y cabeza de válvulas" class="w-full h-full object-cover">
@@ -606,7 +587,7 @@
             closeModal();
         }
 
-        // --- LÓGICA DE COMPARTIR Y REINICIAR ---
+        // --- LÓGICA DE COMPARTIR Y REINICIAR (Sin alertas del sistema) ---
 
         function openShareModal() {
             const modal = document.getElementById('share-modal');
