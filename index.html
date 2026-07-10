@@ -587,9 +587,18 @@
 
             recalculateValve(selectedValveId);
             buildEngineLayout();
+            
+            /* BUILD-006B */
+               saveSystem();
+            
             closeModal();
         }
 
+
+
+
+
+        
         // --- LÓGICA DE COMPARTIR Y REINICIAR (Sin alertas del sistema) ---
 
         function openShareModal() {
