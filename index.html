@@ -361,6 +361,13 @@ if(system){
     targetEscape =
         system.targetEscape || 0.012;
 
+
+
+exhaustOnTop =
+    system.exhaustOnTop ?? true;
+
+    
+
     valvesState =
         system.valvesState || {};
 
@@ -451,6 +458,26 @@ setGridCylinders(activeCylinders);
 
             buildEngineLayout();
         }
+
+
+//==================================================
+// INTERCAMBIAR ESCAPE / ADMISION
+//==================================================
+
+function toggleValveOrientation(){
+
+    exhaustOnTop = !exhaustOnTop;
+
+    buildEngineLayout();
+
+    saveSystem();
+
+}
+
+
+
+
+        
 
         // Normalizador inteligente: convierte enteros "10" a decimales "0.010"
         function normalizeMeasurement(val) {
