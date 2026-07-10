@@ -330,8 +330,49 @@
 
 function initializeApp(){
 
-    // Cargar configuración inicial
-    setGridCylinders(4);
+   //=========================================
+// RECUPERAR SISTEMA
+//=========================================
+
+const system = loadSystem();
+
+if(system){
+
+    activeCylinders =
+        system.activeCylinders || 4;
+
+    targetAdmision =
+        system.targetAdmision || 0.010;
+
+    targetEscape =
+        system.targetEscape || 0.012;
+
+    valvesState =
+        system.valvesState || {};
+
+}else{
+
+    activeCylinders = 4;
+
+}
+
+// Actualizar cajas de texto
+
+document.getElementById("input-target-adm").value =
+    targetAdmision.toFixed(3);
+
+document.getElementById("input-target-esc").value =
+    targetEscape.toFixed(3);
+
+// Dibujar motor
+
+setGridCylinders(activeCylinders);
+
+
+
+    
+
+    
 
     // Animación de la barra del Splash
     setTimeout(() => {
