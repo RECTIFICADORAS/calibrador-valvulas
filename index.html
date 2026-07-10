@@ -318,6 +318,9 @@
         // Base de datos de válvulas en memoria
         let valvesState = {};
 
+
+        
+
         // Inicializar al cargar el documento con control de Splash Screen
         window.onload = function() {
             // Cargar la configuración de culata predeterminada
@@ -630,6 +633,91 @@
             buildEngineLayout();
             closeConfirmResetModal();
         }
+
+
+//==================================================
+// BUILD-006A
+// PERSISTENCE ENGINE
+//==================================================
+
+const STORAGE_KEY = "rectiValve";
+
+/*
+ Guarda todo el estado actual del sistema.
+ Todavía NO se llama desde ninguna función.
+*/
+function saveSystem(){
+
+    const system = {
+
+        version:"1.0.6",
+
+        activeCylinders,
+
+        targetAdmision,
+
+        targetEscape,
+
+        valvesState,
+
+        savedAt:new Date().toISOString()
+
+    };
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(system)
+    );
+
+}
+
+/*
+ Recupera el estado guardado.
+ Todavía NO modifica la aplicación.
+ Solo devuelve la información.
+*/
+function loadSystem(){
+
+    const json =
+        localStorage.getItem(STORAGE_KEY);
+
+    if(!json){
+
+        return null;
+
+    }
+
+    try{
+
+        return JSON.parse(json);
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Persistence Engine:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+/*
+ Elimina el almacenamiento.
+*/
+function clearSystem(){
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+}
+
+        
     </script>
 </body>
 </html>
