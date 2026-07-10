@@ -62,7 +62,7 @@
 
             <!-- Barra de progreso de 6 segundos -->
             <div class="w-64 h-1 bg-slate-900 rounded-full overflow-hidden border border-slate-800/80 relative">
-                <div id="splash-progress" class="h-full bg-cyan-400 rounded-full transition-all duration-[6000ms] ease-out w-0"></div>
+                <div id="splash-progress" class="h-full bg-cyan-400 rounded-full transition-all duration-[3000ms] ease-out w-0"></div>
             </div>
 
             <!-- Botón para omitir si el mecánico está de prisa -->
@@ -322,19 +322,37 @@
         
 
         // Inicializar al cargar el documento con control de Splash Screen
-        window.onload = function() {
-            // Cargar la configuración de culata predeterminada
-            setGridCylinders(4);
-            
-            // Iniciar la animación de la barra de progreso del splash screen
-            setTimeout(() => {
-                const progress = document.getElementById('splash-progress');
-                if (progress) progress.style.width = '100%';
-            }, 100);
+     window.onload = function () {
 
-            // Desvanecer splash screen automáticamente después de 6 segundos (6000ms)
-            setTimeout(dismissSplash, 6000);
-        };
+    initializeApp();
+
+};
+
+function initializeApp(){
+
+    // Cargar configuración inicial
+    setGridCylinders(4);
+
+    // Animación de la barra del Splash
+    setTimeout(() => {
+
+        const progress =
+            document.getElementById("splash-progress");
+
+        if(progress){
+
+            progress.style.width = "100%";
+
+        }
+
+    },100);
+
+    // Splash de 3 segundos
+    setTimeout(dismissSplash,3000);
+
+}
+
+        
 
         // Función para cerrar la pantalla introductoria con un desvanecimiento suave
         function dismissSplash() {
