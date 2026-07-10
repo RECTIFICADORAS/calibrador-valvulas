@@ -320,7 +320,19 @@
         // Base de datos de válvulas en memoria
         let valvesState = {};
 
+        
 
+//==================================================
+// ORIENTATION ENGINE
+//==================================================
+
+// true = Escape arriba
+// false = Admisión arriba
+
+let exhaustOnTop = true;
+
+
+        
         
 
         // Inicializar al cargar el documento con control de Splash Screen
@@ -718,21 +730,23 @@ const STORAGE_KEY = "rectiValve";
 */
 function saveSystem(){
 
-    const system = {
+  const system = {
 
-        version:"1.0.6",
+    version:"1.0.6",
 
-        activeCylinders,
+    activeCylinders,
 
-        targetAdmision,
+    targetAdmision,
 
-        targetEscape,
+    targetEscape,
 
-        valvesState,
+    exhaustOnTop,
 
-        savedAt:new Date().toISOString()
+    valvesState,
 
-    };
+    savedAt:new Date().toISOString()
+
+};
 
     localStorage.setItem(
         STORAGE_KEY,
