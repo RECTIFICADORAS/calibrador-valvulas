@@ -425,6 +425,18 @@
         // Base de datos de válvulas en memoria
         let valvesState = {};
 
+
+
+        //=========================================
+// WORK SESSION
+//=========================================
+
+let startedAt = null;
+
+let lastSaved = null;
+
+let finishedAt = null;
+
         
 
 //==================================================
@@ -469,23 +481,31 @@ if(system){
     exhaustOnTop =
         system.exhaustOnTop ?? true;
 
-    startedAt =
-        system.startedAt ?? null;
-
-    lastSaved =
-        system.lastSaved ?? null;
-
-    finishedAt =
-        system.finishedAt ?? null;
-
     valvesState =
         system.valvesState || {};
+
+    startedAt =
+        system.startedAt || null;
+
+    lastSaved =
+        system.lastSaved || null;
+
+    finishedAt =
+        system.finishedAt || null;
 
 }else{
 
     activeCylinders = 4;
 
+    startedAt = null;
+
+    lastSaved = null;
+
+    finishedAt = null;
+
 }
+
+    
 // Actualizar cajas de texto
 
 document.getElementById("input-target-adm").value =
