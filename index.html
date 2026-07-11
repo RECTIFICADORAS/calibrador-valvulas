@@ -1071,8 +1071,84 @@ function clearSystem(){
 
 }
 
-        
+
+
+        //==================================================
+// WORK SESSION ENGINE
+// BUILD-009
+// CAPITULO 01
+//==================================================
+
+function getWorkProgress(){
+
+    const valves =
+        Object.values(valvesState);
+
+    const totalValves =
+        valves.length;
+
+    let measuredValves = 0;
+
+    valves.forEach(v=>{
+
+        if(
+            Number(v.measured) > 0
+        ){
+
+            measuredValves++;
+
+        }
+
+    });
+
+    const pendingValves =
+        totalValves - measuredValves;
+
+    const percent =
+        totalValves === 0
+            ? 0
+            : Math.round(
+                (measuredValves / totalValves) * 100
+            );
+
+    return{
+
+        totalValves,
+
+        measuredValves,
+
+        pendingValves,
+
+        percent
+
+    };
+
+}
+
+//--------------------------------------------------
+
+function hasPendingWork(){
+
+    const progress =
+        getWorkProgress();
+
+    return progress.measuredValves > 0;
+
+}
+
+//--------------------------------------------------
+
+function updateLastSaved(){
+
+    system.lastSaved =
+        new Date().toISOString();
+
+}
         
     </script>
+
+
+
+
 </body>
 </html>
