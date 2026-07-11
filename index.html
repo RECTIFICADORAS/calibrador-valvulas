@@ -147,13 +147,61 @@
 
         <!-- Representación Física de la Cabeza del Motor -->
         <section class="flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-                <h2 class="text-sm font-bold text-white tracking-wide">Culata / Cabeza de Motor</h2>
-                <!-- Indicador del Frente del Motor -->
-                <div class="flex items-center gap-1 text-xs text-cyan-400 font-bold bg-cyan-950/50 border border-cyan-800 px-2.5 py-1 rounded-full animate-pulse">
-                    <span class="material-icons text-xs">arrow_back</span> FRENTE DEL MOTOR
-                </div>
-            </div>
+
+
+         <div class="flex items-center justify-between flex-wrap gap-3">
+
+    <h2 class="text-sm font-bold text-white tracking-wide">
+        Culata / Cabeza de Motor
+    </h2>
+
+    <div class="flex items-center gap-2">
+
+        <button
+            onclick="toggleValveOrientation()"
+            class="flex items-center gap-1
+                   bg-slate-800
+                   hover:bg-cyan-900
+                   border border-cyan-700
+                   text-cyan-300
+                   px-3 py-1.5
+                   rounded-lg
+                   text-xs
+                   font-bold
+                   transition
+                   active:scale-95">
+
+            <span class="material-icons text-sm">
+                swap_vert
+            </span>
+
+            Cambiar Escape / Admisión
+
+        </button>
+
+        <div class="flex items-center gap-1
+                    text-xs
+                    text-cyan-400
+                    font-bold
+                    bg-cyan-950/50
+                    border border-cyan-800
+                    px-2.5
+                    py-1
+                    rounded-full">
+
+            <span class="material-icons text-xs">
+                arrow_back
+            </span>
+
+            FRENTE DEL MOTOR
+
+        </div>
+
+    </div>
+
+</div>
+
+            
 
             <!-- Tablero de Válvulas con Scrollbar personalizado -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-x-auto shadow-inner custom-scrollbar">
@@ -740,11 +788,18 @@ function toggleValveOrientation(){
             card.classList.remove('translate-y-0');
         }
 
-        function confirmResetAll() {
-            valvesState = {};
-            buildEngineLayout();
-            closeConfirmResetModal();
-        }
+        
+function confirmResetAll() {
+
+    valvesState = {};
+
+    clearSystem();
+
+    buildEngineLayout();
+
+    closeConfirmResetModal();
+
+}
 
 
 //==================================================
