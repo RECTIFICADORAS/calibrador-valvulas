@@ -543,11 +543,21 @@ function toggleValveOrientation(){
 
         // Construir la matriz visual de la culata (Escape arriba, Admisión abajo)
         function buildEngineLayout() {
-            const exhaustRow = document.getElementById('exhaust-row');
-            const intakeRow = document.getElementById('intake-row');
+            const topRow =
+    exhaustOnTop
+        ? document.getElementById("exhaust-row")
+        : document.getElementById("intake-row");
 
-            exhaustRow.innerHTML = '';
-            intakeRow.innerHTML = '';
+const bottomRow =
+    exhaustOnTop
+        ? document.getElementById("intake-row")
+        : document.getElementById("exhaust-row");
+
+topRow.innerHTML = "";
+bottomRow.innerHTML = "";
+
+
+            
 
             // Generar cilindro a cilindro (del 1 al total de cilindros)
             for (let cyl = 1; cyl <= activeCylinders; cyl++) {
@@ -564,7 +574,18 @@ function toggleValveOrientation(){
                     }
                     escapeGroup.appendChild(createValveElement(valvesState[id]));
                 }
-                exhaustRow.appendChild(escapeGroup);
+                if(exhaustOnTop){
+
+    topRow.appendChild(escapeGroup);
+
+}else{
+
+    bottomRow.appendChild(escapeGroup);
+
+}
+
+
+                
 
                 // --- LINEA DE ADMISIÓN (2 válvulas por cilindro) ---
                 const intakeGroup = document.createElement('div');
@@ -578,7 +599,20 @@ function toggleValveOrientation(){
                     }
                     intakeGroup.appendChild(createValveElement(valvesState[id]));
                 }
-                intakeRow.appendChild(intakeGroup);
+
+                
+                if(exhaustOnTop){
+
+    bottomRow.appendChild(intakeGroup);
+
+}else{
+
+    topRow.appendChild(intakeGroup);
+
+}
+
+
+                
             }
         }
 
