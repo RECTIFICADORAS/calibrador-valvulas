@@ -149,57 +149,73 @@
         <section class="flex flex-col gap-3">
 
 
-         <div class="flex items-center justify-between flex-wrap gap-3">
+            
 
-    <h2 class="text-sm font-bold text-white tracking-wide">
-        Culata / Cabeza de Motor
-    </h2>
+    <div class="flex items-center justify-between flex-wrap gap-3">
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-4 flex-wrap">
 
-        <button
-            onclick="toggleValveOrientation()"
-            class="flex items-center gap-1
-                   bg-slate-800
-                   hover:bg-cyan-900
-                   border border-cyan-700
-                   text-cyan-300
-                   px-3 py-1.5
-                   rounded-lg
-                   text-xs
-                   font-bold
-                   transition
-                   active:scale-95">
+        <h2 class="text-sm font-bold text-white tracking-wide">
+            Culata / Cabeza de Motor
+        </h2>
 
-            <span class="material-icons text-sm">
-                swap_vert
+        <div
+            class="flex items-center
+                   gap-2
+                   px-4 py-1.5
+                   rounded-full
+                   bg-cyan-950/60
+                   border border-cyan-700">
+
+            <span
+                class="material-icons
+                       text-2xl
+                       text-cyan-300">
+
+                west
+
             </span>
 
-            Cambiar Escape / Admisión
+            <span
+                class="text-sm
+                       font-extrabold
+                       tracking-wider
+                       text-cyan-300">
 
-        </button>
+                FRENTE DEL MOTOR
 
-        <div class="flex items-center gap-1
-                    text-xs
-                    text-cyan-400
-                    font-bold
-                    bg-cyan-950/50
-                    border border-cyan-800
-                    px-2.5
-                    py-1
-                    rounded-full">
-
-            <span class="material-icons text-xs">
-                arrow_back
             </span>
-
-            FRENTE DEL MOTOR
 
         </div>
 
     </div>
 
+    <button
+        onclick="toggleValveOrientation()"
+        class="flex items-center
+               gap-2
+               bg-slate-800
+               hover:bg-cyan-900
+               border border-cyan-700
+               text-cyan-300
+               px-4 py-2
+               rounded-lg
+               text-sm
+               font-bold
+               transition
+               active:scale-95">
+
+        <span class="material-icons">
+            swap_vert
+        </span>
+
+        Escape ↔ Admisión
+
+    </button>
+
 </div>
+
+
 
             
 
