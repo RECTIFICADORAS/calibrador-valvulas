@@ -1163,6 +1163,243 @@ function updateLastSaved(){
         new Date().toISOString();
 
 }
+
+
+<!--==================================================
+WORK SESSION MODAL
+BUILD-009
+===================================================-->
+
+<div
+id="workSessionModal"
+class="fixed inset-0
+bg-black/70
+backdrop-blur-sm
+hidden
+items-center
+justify-center
+z-50">
+
+    <div
+    class="bg-slate-900
+    border
+    border-cyan-700
+    rounded-3xl
+    shadow-2xl
+    w-[92%]
+    max-w-md
+    p-6">
+
+        <div class="text-center">
+
+            <span
+            class="material-icons
+            text-cyan-300
+            text-5xl">
+
+                engineering
+
+            </span>
+
+            <h2
+            class="text-2xl
+            font-bold
+            text-white
+            mt-3">
+
+                CONTINUAR TRABAJO
+
+            </h2>
+
+            <p
+            class="text-slate-400
+            mt-2">
+
+                Se encontró una calibración
+                guardada automáticamente.
+
+            </p>
+
+        </div>
+
+        <div
+        id="workSessionInfo"
+        class="mt-6">
+
+        </div>
+
+        <div
+        class="flex
+        flex-col
+        gap-3
+        mt-6">
+
+            <button
+            id="btnContinueWork"
+            class="bg-cyan-600
+            hover:bg-cyan-500
+            rounded-xl
+            py-3
+            font-bold">
+
+                CONTINUAR
+
+            </button>
+
+            <button
+            id="btnNewWork"
+            class="bg-slate-800
+            hover:bg-slate-700
+            rounded-xl
+            py-3
+            font-bold">
+
+                NUEVO MOTOR
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+//==================================================
+// WORK SESSION MODAL
+// BUILD-009
+// CAPITULO 05
+//==================================================
+
+function showWorkSessionModal(){
+
+    const modal =
+        document.getElementById(
+            "workSessionModal"
+        );
+
+    if(!modal)return;
+
+    const progress =
+        getWorkProgress();
+
+    const info =
+        document.getElementById(
+            "workSessionInfo"
+        );
+
+    info.innerHTML = `
+
+        <div class="space-y-3">
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+                    Motor
+                </span>
+
+                <span class="font-bold">
+                    ${activeCylinders} cilindros
+                </span>
+
+            </div>
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+                    Orientación
+                </span>
+
+                <span class="font-bold">
+
+                    ${
+                        exhaustOnTop
+                        ? "Escape arriba"
+                        : "Escape abajo"
+                    }
+
+                </span>
+
+            </div>
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+                    Progreso
+                </span>
+
+                <span class="font-bold">
+
+                    ${progress.measuredValves}
+                    /
+                    ${progress.totalValves}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div
+        class="mt-5
+        h-3
+        rounded-full
+        bg-slate-800
+        overflow-hidden">
+
+            <div
+            class="bg-cyan-500
+            h-full"
+
+            style="width:${progress.percent}%">
+
+            </div>
+
+        </div>
+
+        <div
+        class="text-center
+        text-cyan-300
+        font-bold
+        mt-2">
+
+            ${progress.percent}% COMPLETADO
+
+        </div>
+
+    `;
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+    modal.classList.add(
+        "flex"
+    );
+
+}
+
+//--------------------------------------------------
+
+function hideWorkSessionModal(){
+
+    const modal =
+        document.getElementById(
+            "workSessionModal"
+        );
+
+    if(!modal)return;
+
+    modal.classList.remove(
+        "flex"
+    );
+
+    modal.classList.add(
+        "hidden"
+    );
+
+}
+        
         
     </script>
 
