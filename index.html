@@ -416,18 +416,20 @@
 
     <!-- Lógica JavaScript Dinámica de la App -->
     <script>
+
+
         // Variables globales de estado
-        let activeCylinders = 4;
-        let targetAdmision = 0.010;
-        let targetEscape = 0.012;
-        let selectedValveId = null;
 
-        // Base de datos de válvulas en memoria
-        let valvesState = {};
+let activeCylinders = 4;
+let targetAdmision = 0.010;
+let targetEscape = 0.012;
+let selectedValveId = null;
 
+// Base de datos de válvulas en memoria
 
+let valvesState = {};
 
-        //=========================================
+//=========================================
 // WORK SESSION
 //=========================================
 
@@ -437,14 +439,9 @@ let lastSaved = null;
 
 let finishedAt = null;
 
-        
-
-//==================================================
+//=========================================
 // ORIENTATION ENGINE
-//==================================================
-
-// true = Escape arriba
-// false = Admisión arriba
+//=========================================
 
 let exhaustOnTop = true;
 
