@@ -502,12 +502,17 @@ if(system){
     targetEscape =
         system.targetEscape || 0.012;
 
+    exhaustOnTop =
+        system.exhaustOnTop ?? true;
 
+    startedAt =
+        system.startedAt ?? null;
 
-exhaustOnTop =
-    system.exhaustOnTop ?? true;
+    lastSaved =
+        system.lastSaved ?? null;
 
-    
+    finishedAt =
+        system.finishedAt ?? null;
 
     valvesState =
         system.valvesState || {};
@@ -517,7 +522,6 @@ exhaustOnTop =
     activeCylinders = 4;
 
 }
-
 // Actualizar cajas de texto
 
 document.getElementById("input-target-adm").value =
