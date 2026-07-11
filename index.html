@@ -1000,27 +1000,42 @@ const STORAGE_KEY = "rectiValve";
 */
 function saveSystem(){
 
-  const system = {
+    if(!startedAt){
 
-    version:"1.0.6",
+        startedAt = new Date().toISOString();
 
-    activeCylinders,
+    }
 
-    targetAdmision,
+    lastSaved = new Date().toISOString();
 
-    targetEscape,
+    const system = {
 
-    exhaustOnTop,
+        version:"1.0.7",
 
-    valvesState,
+        activeCylinders,
 
-    savedAt:new Date().toISOString()
+        targetAdmision,
 
-};
+        targetEscape,
+
+        exhaustOnTop,
+
+        valvesState,
+
+        startedAt,
+
+        lastSaved,
+
+        finishedAt
+
+    };
 
     localStorage.setItem(
+
         STORAGE_KEY,
+
         JSON.stringify(system)
+
     );
 
 }
