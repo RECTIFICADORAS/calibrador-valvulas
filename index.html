@@ -157,7 +157,10 @@
 
             <!-- Tablero de Válvulas con Scrollbar personalizado -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-x-auto shadow-inner custom-scrollbar">
-                <div class="min-w-[850px] flex flex-col gap-6" id="engine-layout-container">
+
+
+
+                
                     <!-- Filas de Válvulas (Se generan por JS) -->
                     <div id="exhaust-row" class="flex justify-around items-center gap-4 relative">
                         <!-- Línea de Escape arriba -->
@@ -465,6 +468,7 @@ setGridCylinders(activeCylinders);
 //==================================================
 
 function toggleValveOrientation(){
+    
 
     exhaustOnTop = !exhaustOnTop;
 
@@ -473,7 +477,6 @@ function toggleValveOrientation(){
     saveSystem();
 
 }
-
 
 
 
