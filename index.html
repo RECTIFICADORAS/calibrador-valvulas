@@ -204,26 +204,28 @@
             
 
             <!-- Tablero de Válvulas con Scrollbar personalizado -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-x-auto shadow-inner custom-scrollbar">
+         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-6 overflow-x-auto shadow-inner custom-scrollbar">
 
+    <div id="engine-layout-container"
+         class="min-w-[850px] flex flex-col gap-6">
 
+        <div id="exhaust-row"
+             class="flex justify-around items-center gap-4 relative">
+        </div>
 
-                
-                    <!-- Filas de Válvulas (Se generan por JS) -->
-                    <div id="exhaust-row" class="flex justify-around items-center gap-4 relative">
-                        <!-- Línea de Escape arriba -->
-                    </div>
-                    
-                    <!-- Línea Divisoria Física (Árboles de levas / bujías) -->
-                    <div class="border-t border-dashed border-slate-800 relative flex justify-center">
-                        <span class="absolute -top-3 bg-slate-900 px-3 text-[10px] text-slate-500 tracking-widest uppercase font-mono">Bujías / Centro de Cámara</span>
-                    </div>
+        <div class="border-t border-dashed border-slate-800 relative flex justify-center">
+            <span class="absolute -top-3 bg-slate-900 px-3 text-[10px] text-slate-500 tracking-widest uppercase font-mono">
+                Bujías / Centro de Cámara
+            </span>
+        </div>
 
-                    <div id="intake-row" class="flex justify-around items-center gap-4 relative">
-                        <!-- Línea de Admisión abajo -->
-                    </div>
-                </div>
-            </div>
+        <div id="intake-row"
+             class="flex justify-around items-center gap-4 relative">
+        </div>
+
+    </div>
+
+</div>
         </section>
 
         <!-- Leyenda de Estados y Código de Colores -->
@@ -442,6 +444,40 @@ setGridCylinders(activeCylinders);
 
 
 
+    const layout =
+    document.getElementById(
+        "engine-layout-container"
+    );
+
+if(layout){
+
+    if(exhaustOnTop){
+
+        layout.classList.add(
+            "flex-col"
+        );
+
+        layout.classList.remove(
+            "flex-col-reverse"
+        );
+
+    }else{
+
+        layout.classList.remove(
+            "flex-col"
+        );
+
+        layout.classList.add(
+            "flex-col-reverse"
+        );
+
+    }
+
+}
+
+    
+
+
     
 
     
@@ -511,16 +547,43 @@ setGridCylinders(activeCylinders);
         }
 
 
+
 //==================================================
 // INTERCAMBIAR ESCAPE / ADMISION
 //==================================================
 
 function toggleValveOrientation(){
-    
 
     exhaustOnTop = !exhaustOnTop;
 
-    buildEngineLayout();
+    const layout =
+        document.getElementById(
+            "engine-layout-container"
+        );
+
+    if(!layout) return;
+
+    if(exhaustOnTop){
+
+        layout.classList.remove(
+            "flex-col-reverse"
+        );
+
+        layout.classList.add(
+            "flex-col"
+        );
+
+    }else{
+
+        layout.classList.remove(
+            "flex-col"
+        );
+
+        layout.classList.add(
+            "flex-col-reverse"
+        );
+
+    }
 
     saveSystem();
 
