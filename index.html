@@ -337,6 +337,66 @@
         
     </main>
 
+
+//==================================================
+// WORK SESSION MODAL
+// BUILD-009
+// CAPITULO 05
+//==================================================
+
+function showWorkSessionModal(){
+
+    const modal =
+        document.getElementById(
+            "workSessionModal"
+        );
+
+    if(!modal)return;
+
+    const progress =
+        getWorkProgress();
+
+    const info =
+        document.getElementById(
+            "workSessionInfo"
+        );
+
+    info.innerHTML = `
+
+        <div class="space-y-3">
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+                    Motor
+                </span>
+
+                <span class="font-bold">
+                    ${activeCylinders} cilindros
+                </span>
+
+            </div>
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+                    Orientación
+                </span>
+
+                <span class="font-bold">
+
+                    ${
+                        exhaustOnTop
+                        ? "Escape arriba"
+                        : "Escape abajo"
+                    }
+
+                </span>
+
+            </div>
+
+
+    
     <!-- Modal de Compartir / Instrucciones -->
     <div id="share-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
         <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="closeShareModal()"></div>
@@ -1265,62 +1325,7 @@ z-50">
 </div>
 
 
-//==================================================
-// WORK SESSION MODAL
-// BUILD-009
-// CAPITULO 05
-//==================================================
 
-function showWorkSessionModal(){
-
-    const modal =
-        document.getElementById(
-            "workSessionModal"
-        );
-
-    if(!modal)return;
-
-    const progress =
-        getWorkProgress();
-
-    const info =
-        document.getElementById(
-            "workSessionInfo"
-        );
-
-    info.innerHTML = `
-
-        <div class="space-y-3">
-
-            <div class="flex justify-between">
-
-                <span class="text-slate-400">
-                    Motor
-                </span>
-
-                <span class="font-bold">
-                    ${activeCylinders} cilindros
-                </span>
-
-            </div>
-
-            <div class="flex justify-between">
-
-                <span class="text-slate-400">
-                    Orientación
-                </span>
-
-                <span class="font-bold">
-
-                    ${
-                        exhaustOnTop
-                        ? "Escape arriba"
-                        : "Escape abajo"
-                    }
-
-                </span>
-
-            </div>
 
             <div class="flex justify-between">
 
