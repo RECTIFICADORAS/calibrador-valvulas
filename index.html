@@ -1402,9 +1402,7 @@ buttonText="Aceptar"
 
 }={}){
 
-showDialog(
-
-createDialog({
+renderDialog({
 
 icon:"✓",
 
@@ -1428,9 +1426,8 @@ ${buttonText}
 
 `
 
-})
+});
 
-);
 
 }
 
@@ -1452,9 +1449,7 @@ buttonText="Entendido"
 
 }={}){
 
-showDialog(
-
-createDialog({
+renderDialog({
 
 icon:"⚠",
 
@@ -1478,9 +1473,7 @@ ${buttonText}
 
 `
 
-})
-
-);
+});
 
 }
 
@@ -1583,9 +1576,7 @@ onCancel=()=>{}
 
 }={}){
 
-showDialog(
-
-createDialog({
+renderDialog({
 
 icon:"?",
 
@@ -1621,21 +1612,19 @@ ${okText}
 
 </div>
 
-`
+`,
 
-})
-
-);
-
-bindDialogActions({
+actions:{
 
 dialogOk:onOk,
 
 dialogCancel:onCancel
 
+}
+
 });
 
-}       
+}
 
         
         
