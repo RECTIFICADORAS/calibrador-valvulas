@@ -1739,6 +1739,36 @@ minute:"2-digit"
 
 }
 
+
+
+/* ==========================================================
+   WORK SUMMARY ENGINE
+========================================================== */
+
+function getWorkSummary(){
+
+const progress=getWorkProgress();
+
+return{
+
+cylinders:activeCylinders,
+
+measured:progress.measured,
+
+pending:progress.pending,
+
+total:progress.total,
+
+percentage:progress.percentage,
+
+startedAt,
+
+lastSaved
+
+};
+
+}
+
         
 
 //==================================================
