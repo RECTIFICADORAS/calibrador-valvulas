@@ -1872,7 +1872,29 @@ function getWorkSummary(){
 
 }
 
+/* ==========================================================
+   SESSION DETAILS ENGINE
+========================================================== */
 
+function getSessionDetails(){
+
+const work = getWorkSummary();
+
+return{
+
+...work,
+
+status:
+
+work.pending===0
+
+? "Completado"
+
+: "En proceso"
+
+};
+
+}
 
         
 
