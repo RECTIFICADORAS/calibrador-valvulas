@@ -1850,27 +1850,29 @@ minute:"2-digit"
 
 function getWorkSummary(){
 
-const progress=getWorkProgress();
+    const progress = getWorkProgress();
 
-return{
+    return{
 
-cylinders:activeCylinders,
+        cylinders: activeCylinders,
 
-measured:progress.measured,
+        measured: progress.measuredValves,
 
-pending:progress.pending,
+        pending: progress.pendingValves,
 
-total:progress.total,
+        total: progress.totalValves,
 
-percentage:progress.percentage,
+        percentage: progress.percent,
 
-startedAt,
+        startedAt,
 
-lastSaved
+        lastSaved
 
-};
+    };
 
 }
+
+
 
         
 
