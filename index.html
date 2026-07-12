@@ -1147,6 +1147,39 @@ function getWorkProgress(){
 
 }
 
+
+
+
+        //==================================================
+// SESSION DETECTOR
+// BUILD-009
+//==================================================
+
+function hasSavedSession(){
+
+    const data = loadSystem();
+
+    if(!data){
+
+        return false;
+
+    }
+
+    if(!data.valvesState){
+
+        return false;
+
+    }
+
+    return Object.values(data.valvesState)
+        .some(v => Number(v.measured) > 0);
+
+}
+
+
+        
+
+        
 //--------------------------------------------------
 
 function hasPendingWork(){
