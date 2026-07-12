@@ -1705,6 +1705,109 @@ dialogClose(){}
 }
 
 
+
+
+/* ==========================================================
+   DIALOG COMPONENTS ENGINE
+   WORK SUMMARY DIALOG
+========================================================== */
+
+function showWorkSummaryDialog(){
+
+const work=getWorkSummary();
+
+renderDialog({
+
+icon:"📊",
+
+iconClass:"bg-cyan-500",
+
+title:"Resumen del trabajo",
+
+message:`
+
+<div class="space-y-3 text-sm text-slate-300">
+
+<div class="flex justify-between">
+
+<span>Motor</span>
+
+<strong>${work.cylinders} cilindros</strong>
+
+</div>
+
+<div class="flex justify-between">
+
+<span>Progreso</span>
+
+<strong>${work.percentage}%</strong>
+
+</div>
+
+<div class="flex justify-between">
+
+<span>Medidas</span>
+
+<strong>${work.measured} / ${work.total}</strong>
+
+</div>
+
+<div class="flex justify-between">
+
+<span>Pendientes</span>
+
+<strong>${work.pending}</strong>
+
+</div>
+
+<hr class="border-slate-700">
+
+<div class="flex justify-between">
+
+<span>Inicio</span>
+
+<strong>${formatDateTime(work.startedAt)}</strong>
+
+</div>
+
+<div class="flex justify-between">
+
+<span>Último guardado</span>
+
+<strong>${formatDateTime(work.lastSaved)}</strong>
+
+</div>
+
+</div>
+
+`,
+
+buttons:`
+
+<button
+
+id="dialogClose"
+
+class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 transition rounded-xl py-3 font-bold">
+
+Cerrar
+
+</button>
+
+`,
+
+actions:{
+
+dialogClose(){}
+
+}
+
+});
+
+}
+
+
+        
         
 /* ==========================================================
    UI ENGINE
