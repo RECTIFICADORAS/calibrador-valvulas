@@ -589,9 +589,21 @@ if(layout){
 
     
 
+//=========================================
+// CONTINUAR SESIÓN SI EXISTE
+//=========================================
 
+if(hasSavedSession()){
+
+    requestAnimationFrame(()=>{
+
+        showContinueScreen();
+
+    });
+
+}
     
-
+}
     
 
     // Animación de la barra del Splash
