@@ -1487,7 +1487,35 @@ ${buttonText}
 );
 
 }
-        
+
+
+
+        /* ==========================================================
+   UI ENGINE
+   BIND DIALOG ACTIONS
+========================================================== */
+
+function bindDialogActions(actions={}){
+
+requestAnimationFrame(()=>{
+
+Object.entries(actions).forEach(([id,callback])=>{
+
+document
+.getElementById(id)
+?.addEventListener("click",()=>{
+
+closeDialog();
+
+callback?.();
+
+});
+
+});
+
+});
+
+}
 
 
 /* ==========================================================
