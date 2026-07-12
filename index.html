@@ -1362,21 +1362,15 @@ buttonText="Aceptar"
 
 }={}){
 
-showDialog(`
+showDialog(
 
-<div class="bg-slate-900 rounded-3xl p-8 text-white max-w-sm w-full">
+createDialog({
 
-<h2 class="text-2xl font-bold">
+title,
 
-${title}
+message,
 
-</h2>
-
-<p class="mt-4 text-slate-300">
-
-${message}
-
-</p>
+buttons:`
 
 <button
 
@@ -1388,12 +1382,13 @@ ${buttonText}
 
 </button>
 
-</div>
+`
 
-`);
+})
+
+);
 
 }
-
 
 
 
