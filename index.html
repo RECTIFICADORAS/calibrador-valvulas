@@ -1519,6 +1519,53 @@ callback?.();
 
 
 
+        /* ==========================================================
+   UI ENGINE
+   RENDER DIALOG
+========================================================== */
+
+function renderDialog({
+
+icon="",
+
+iconClass="bg-cyan-500",
+
+title="",
+
+message="",
+
+buttons="",
+
+actions={}
+
+}={}){
+
+showDialog(
+
+createDialog({
+
+icon,
+
+iconClass,
+
+title,
+
+message,
+
+buttons
+
+})
+
+);
+
+bindDialogActions(actions);
+
+}
+
+
+        
+
+
  /* ==========================================================
    UI ENGINE
    CONFIRM DIALOG
@@ -1614,9 +1661,7 @@ function closeDialog(){
 
 function showAboutDialog(){
 
-showDialog(
-
-createDialog({
+renderDialog({
 
 icon:"🔧",
 
@@ -1629,30 +1674,21 @@ message:`
 <div class="space-y-3 text-sm text-slate-300">
 
 <p>
-
 Calculador Profesional de Holguras de Válvulas.
-
 </p>
 
 <p>
-
 Versión 1.0
-
 </p>
 
 <p>
-
 Desarrollado para rectificadoras,
-talleres automotrices y técnicos
-especializados.
-
+talleres automotrices y técnicos especializados.
 </p>
 
 <p>
-
 Arquitectura modular basada en
 Engines independientes.
-
 </p>
 
 </div>
@@ -1671,19 +1707,20 @@ Cerrar
 
 </button>
 
-`
+`,
 
-})
-
-);
-
-bindDialogActions({
+actions:{
 
 dialogClose(){}
+
+}
 
 });
 
 }
+
+
+        
 
 
         
