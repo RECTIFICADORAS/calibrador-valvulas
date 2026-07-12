@@ -1606,6 +1606,86 @@ function closeDialog(){
         
 
 
+
+/* ==========================================================
+   DIALOG COMPONENTS ENGINE
+   ABOUT DIALOG
+========================================================== */
+
+function showAboutDialog(){
+
+showDialog(
+
+createDialog({
+
+icon:"🔧",
+
+iconClass:"bg-cyan-500",
+
+title:"RECTI-VALVE PRO",
+
+message:`
+
+<div class="space-y-3 text-sm text-slate-300">
+
+<p>
+
+Calculador Profesional de Holguras de Válvulas.
+
+</p>
+
+<p>
+
+Versión 1.0
+
+</p>
+
+<p>
+
+Desarrollado para rectificadoras,
+talleres automotrices y técnicos
+especializados.
+
+</p>
+
+<p>
+
+Arquitectura modular basada en
+Engines independientes.
+
+</p>
+
+</div>
+
+`,
+
+buttons:`
+
+<button
+
+id="dialogClose"
+
+class="mt-6 w-full bg-cyan-500 hover:bg-cyan-400 transition rounded-xl py-3 font-bold">
+
+Cerrar
+
+</button>
+
+`
+
+})
+
+);
+
+bindDialogActions({
+
+dialogClose(){}
+
+});
+
+}
+
+
         
 
 //==================================================
