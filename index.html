@@ -1231,6 +1231,157 @@ function removeWelcomeScreen(){
 
 }        
 
+
+
+
+//==================================================
+// CONTINUE SCREEN
+// BUILD-009
+// CAPITULO 04
+//==================================================
+
+function showContinueScreen(){
+
+    const progress =
+        getWorkProgress();
+
+    createWelcomeScreen(`
+
+<div class="w-full max-w-md">
+
+    <div
+    class="bg-slate-900
+           border
+           border-cyan-700
+           rounded-3xl
+           p-8
+           shadow-2xl">
+
+        <div class="text-center">
+
+            <span
+            class="material-icons
+                   text-cyan-400
+                   text-6xl">
+
+                engineering
+
+            </span>
+
+            <h1
+            class="text-3xl
+                   font-bold
+                   text-white
+                   mt-4">
+
+                RECTI-VALVE PRO
+
+            </h1>
+
+            <p
+            class="text-slate-400
+                   mt-3">
+
+                Se encontró un trabajo guardado.
+
+            </p>
+
+        </div>
+
+        <div
+        class="mt-8
+               space-y-4">
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+
+                    Motor
+
+                </span>
+
+                <span class="font-bold text-white">
+
+                    ${activeCylinders} cilindros
+
+                </span>
+
+            </div>
+
+            <div class="flex justify-between">
+
+                <span class="text-slate-400">
+
+                    Avance
+
+                </span>
+
+                <span class="font-bold text-cyan-400">
+
+                    ${progress.measuredValves}
+                    /
+                    ${progress.totalValves}
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div
+        class="mt-6
+               h-3
+               bg-slate-800
+               rounded-full
+               overflow-hidden">
+
+            <div
+            class="bg-cyan-500
+                   h-full"
+
+            style="width:${progress.percent}%">
+
+            </div>
+
+        </div>
+
+        <div
+        class="text-center
+               mt-2
+               text-cyan-300
+               font-bold">
+
+            ${progress.percent}% COMPLETADO
+
+        </div>
+
+        <button
+
+            onclick="removeWelcomeScreen()"
+
+            class="w-full
+                   mt-8
+                   py-3
+                   rounded-xl
+                   bg-cyan-500
+                   hover:bg-cyan-400
+                   text-slate-950
+                   font-bold">
+
+            CONTINUAR
+
+        </button>
+
+    </div>
+
+</div>
+
+`);
+
+}
+
+
+        
         
 //--------------------------------------------------
 
