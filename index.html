@@ -1177,7 +1177,59 @@ function hasSavedSession(){
 }
 
 
-        
+//==================================================
+// WELCOME SCREEN ENGINE
+// BUILD-009
+// CAPITULO 03
+//==================================================
+
+function createWelcomeScreen(html){
+
+    const oldScreen =
+        document.getElementById(
+            "welcomeScreen"
+        );
+
+    if(oldScreen){
+
+        oldScreen.remove();
+
+    }
+
+    const screen =
+        document.createElement("div");
+
+    screen.id =
+        "welcomeScreen";
+
+    screen.className = `
+        fixed
+        inset-0
+        z-[9999]
+        bg-slate-950
+        flex
+        items-center
+        justify-center
+        p-6
+    `;
+
+    screen.innerHTML = html;
+
+    document.body.appendChild(
+        screen
+    );
+
+}
+
+function removeWelcomeScreen(){
+
+    document
+    .getElementById(
+        "welcomeScreen"
+    )
+    ?.remove();
+
+}        
 
         
 //--------------------------------------------------
