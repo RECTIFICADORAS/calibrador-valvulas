@@ -976,6 +976,12 @@ bottomRow.innerHTML = "";
             v.measured = normalizeMeasurement(measuredInput);
             v.currentShim = normalizeMeasurement(shimInput);
 
+            if(v.measured>0){
+
+Analytics.workStarted(activeCylinders);
+
+}
+
             recalculateValve(selectedValveId);
             buildEngineLayout();
             
