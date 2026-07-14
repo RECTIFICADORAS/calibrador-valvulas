@@ -12,6 +12,8 @@ const FILES_TO_CACHE = [
 
 "./index.html",
 
+"./analytics.js",
+
 "./manifest.json",
 
 "./icons/icon-192.png",
