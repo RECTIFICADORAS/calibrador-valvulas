@@ -818,11 +818,35 @@ bottomRow.innerHTML = "";
 
     topRow.appendChild(intakeGroup);
 
-}
-
-
-                
+}   
             }
+/* ==========================================================
+   BUILD-013
+   WORK COMPLETED
+========================================================== */
+
+const workCompleted =
+
+Object.values(valvesState)
+
+.every(v=>v.measured>0);
+
+if(
+
+workCompleted &&
+
+!finishedAt
+
+){
+
+finishedAt = new Date().toISOString();
+
+Analytics.workCompleted(activeCylinders);
+
+saveSystem();
+
+}
+            
         }
 
         // Crear una tarjeta de válvula interactiva
