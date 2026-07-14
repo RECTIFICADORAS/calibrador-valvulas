@@ -658,6 +658,7 @@ if(hasSavedSession()){
         // Cambiar cantidad de cilindros y rediseñar cabezal
         function setGridCylinders(num) {
             activeCylinders = num;
+    Analytics.engineSelected(activeCylinders);
             
             // Actualizar botones de opción visualmente (Soporta 3, 4, 5, 6)
             [3, 4, 5, 6].forEach(n => {
