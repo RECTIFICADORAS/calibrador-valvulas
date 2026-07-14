@@ -698,6 +698,7 @@ if(hasSavedSession()){
 function toggleValveOrientation(){
 
     exhaustOnTop = !exhaustOnTop;
+    Analytics.orientationChanged();
 
     const layout =
         document.getElementById(
