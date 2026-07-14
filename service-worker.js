@@ -4,7 +4,7 @@
    VERSION 1.0.0
 ========================================================== */
 
-const CACHE_NAME = "rectivalve-v2";
+const CACHE_NAME = "rectivalve-v3";
 
 const FILES_TO_CACHE = [
 
