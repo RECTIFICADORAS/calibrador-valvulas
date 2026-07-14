@@ -5,7 +5,7 @@
    VERSION 2.0.0
 ========================================================== */
 
-const CACHE_NAME="rectivalve-v4";
+const CACHE_NAME="rectivalve-v6";
 
 /*----------------------------------------------------------
 ARCHIVOS ESTÁTICOS
