@@ -59,7 +59,17 @@ getAnalytics(app);
 
 window.Analytics={
 
+version:"1.0.0",
+
 track(eventName,data={}){
+
+const payload={
+
+version:this.version,
+
+...data
+
+};
 
 logEvent(
 
@@ -67,7 +77,7 @@ analytics,
 
 eventName,
 
-data
+payload
 
 );
 
@@ -77,7 +87,105 @@ console.log(
 
 eventName,
 
-data
+payload
+
+);
+
+},
+
+appOpen(){
+
+this.track(
+
+"app_open"
+
+);
+
+},
+
+workStarted(cylinders){
+
+this.track(
+
+"work_started",
+
+{
+
+cylinders
+
+}
+
+);
+
+},
+
+workCompleted(cylinders){
+
+this.track(
+
+"work_completed",
+
+{
+
+cylinders
+
+}
+
+);
+
+},
+
+engineSelected(cylinders){
+
+this.track(
+
+"engine_selected",
+
+{
+
+cylinders
+
+}
+
+);
+
+},
+
+orientationChanged(){
+
+this.track(
+
+"orientation_changed"
+
+);
+
+},
+
+workRestored(){
+
+this.track(
+
+"work_restored"
+
+);
+
+},
+
+workReset(){
+
+this.track(
+
+"work_reset"
+
+);
+
+},
+
+pwaInstalled(){
+
+this.track(
+
+"pwa_installed"
 
 );
 
@@ -85,12 +193,5 @@ data
 
 };
 
-//==========================================================
-// APP OPEN
-//==========================================================
 
-Analytics.track("app_open",{
-
-version:"1.0.0"
-
-});
+Analytics.appOpen();
