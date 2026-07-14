@@ -1,18 +1,21 @@
 /* ==========================================================
    RECTI-VALVE PRO
-   SERVICE WORKER
-   VERSION 1.0.0
+   PROFESSIONAL CACHE ENGINE
+   BUILD-014
+   VERSION 2.0.0
 ========================================================== */
 
-const CACHE_NAME = "rectivalve-v5";
+const CACHE_NAME="rectivalve-v4";
 
-const FILES_TO_CACHE = [
+/*----------------------------------------------------------
+ARCHIVOS ESTÁTICOS
+----------------------------------------------------------*/
+
+const STATIC_FILES=[
 
 "./",
 
 "./index.html",
-
-"./analytics.js",
 
 "./manifest.json",
 
@@ -22,9 +25,9 @@ const FILES_TO_CACHE = [
 
 ];
 
-//------------------------------------------------------------
-// INSTALACIÓN
-//------------------------------------------------------------
+/*----------------------------------------------------------
+INSTALACIÓN
+----------------------------------------------------------*/
 
 self.addEventListener("install",(event)=>{
 
@@ -32,7 +35,7 @@ event.waitUntil(
 
 caches.open(CACHE_NAME)
 
-.then(cache=>cache.addAll(FILES_TO_CACHE))
+.then(cache=>cache.addAll(STATIC_FILES))
 
 );
 
@@ -40,11 +43,9 @@ self.skipWaiting();
 
 });
 
-
-
-//------------------------------------------------------------
-// ACTIVACIÓN
-//------------------------------------------------------------
+/*----------------------------------------------------------
+ACTIVACIÓN
+----------------------------------------------------------*/
 
 self.addEventListener("activate",(event)=>{
 
@@ -52,9 +53,9 @@ event.waitUntil(
 
 caches.keys()
 
-.then(keys=>{
+.then(keys=>
 
-return Promise.all(
+Promise.all(
 
 keys
 
@@ -62,9 +63,9 @@ keys
 
 .map(key=>caches.delete(key))
 
-);
+)
 
-})
+)
 
 .then(()=>self.clients.claim())
 
@@ -72,42 +73,40 @@ keys
 
 });
 
-
-
-
-//------------------------------------------------------------
-// FETCH
-//------------------------------------------------------------
+/*----------------------------------------------------------
+FETCH
+----------------------------------------------------------*/
 
 self.addEventListener("fetch",(event)=>{
 
-if(event.request.mode==="navigate"){
+const request=event.request;
+
+const url=new URL(request.url);
+
+/*=========================================
+HTML
+Network First
+=========================================*/
+
+if(request.mode==="navigate"){
 
 event.respondWith(
 
-fetch(event.request)
+fetch(request)
 
 .then(response=>{
 
-const clone=response.clone();
+const copy=response.clone();
 
 caches.open(CACHE_NAME)
 
-.then(cache=>{
-
-cache.put(event.request,clone);
-
-});
+.then(cache=>cache.put(request,copy));
 
 return response;
 
 })
 
-.catch(()=>{
-
-return caches.match(event.request);
-
-})
+.catch(()=>caches.match(request))
 
 );
 
@@ -115,3 +114,56 @@ return;
 
 }
 
+/*=========================================
+ARCHIVOS CRÍTICOS
+Siempre versión nueva
+=========================================*/
+
+if(
+
+url.pathname.endsWith("manifest.json") ||
+
+url.pathname.endsWith("analytics.js") ||
+
+url.pathname.endsWith("service-worker.js")
+
+){
+
+event.respondWith(fetch(request));
+
+return;
+
+}
+
+/*=========================================
+IMÁGENES E ICONOS
+Cache First
+=========================================*/
+
+event.respondWith(
+
+caches.match(request)
+
+.then(response=>{
+
+if(response)return response;
+
+return fetch(request)
+
+.then(network=>{
+
+const copy=network.clone();
+
+caches.open(CACHE_NAME)
+
+.then(cache=>cache.put(request,copy));
+
+return network;
+
+});
+
+})
+
+);
+
+});
