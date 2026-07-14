@@ -71,22 +71,47 @@ keys
 );
 
 });
+
+
+
+
 //------------------------------------------------------------
 // FETCH
 //------------------------------------------------------------
 
 self.addEventListener("fetch",(event)=>{
 
+if(event.request.mode==="navigate"){
+
 event.respondWith(
 
-caches.match(event.request)
+fetch(event.request)
 
 .then(response=>{
 
-return response || fetch(event.request);
+const clone=response.clone();
+
+caches.open(CACHE_NAME)
+
+.then(cache=>{
+
+cache.put(event.request,clone);
+
+});
+
+return response;
+
+})
+
+.catch(()=>{
+
+return caches.match(event.request);
 
 })
 
 );
 
-});
+return;
+
+}
+
