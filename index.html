@@ -2273,6 +2273,30 @@ console.error(error);
 
 }
 
+/* ==========================================================
+   BUILD-013
+   PWA INSTALL EVENT
+========================================================== */
+
+window.addEventListener(
+
+"appinstalled",
+
+()=>{
+
+console.log(
+
+"✅ RECTI-VALVE PRO instalada"
+
+);
+
+Analytics.pwaInstalled();
+
+}
+);
+
+
+    
 </script>
 
     <script type="module" src="analytics.js"></script>
