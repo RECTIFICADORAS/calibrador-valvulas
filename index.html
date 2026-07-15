@@ -103,12 +103,26 @@
                     <p class="text-xs text-slate-400">Ajuste de Shims & Tolerancias</p>
                 </div>
             </div>
-            <!-- Botones de Acción (Compartir y Reiniciar) -->
+            <!-- Boton de Acción (Reiniciar) -->
             <div class="flex items-center gap-2">
                 
                 <button onclick="openConfirmResetModal()" class="flex items-center gap-1 bg-rose-950 hover:bg-rose-900 text-rose-300 border border-rose-800 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition active:scale-95">
                     <span class="material-icons text-sm">restart_alt</span> Reiniciar
                 </button>
+
+                <button
+id="install-button"
+class="hidden flex items-center gap-1 bg-cyan-600 hover:bg-cyan-500 text-slate-950 text-xs px-2.5 py-1.5 rounded-lg font-semibold transition active:scale-95">
+
+<span class="material-icons text-sm">
+download
+</span>
+
+Instalar
+
+</button>
+
+                
             </div>
         </div>
     </header>
@@ -458,10 +472,8 @@ let lastSaved = null;
 
 let finishedAt = null;
 
-
-
+let deferredPrompt = null;
         
-
 let workSession = {
 
     id:null,
@@ -490,22 +502,12 @@ let workSession = {
 
 };
 
-
-
-
-
-
-        
-
 //=========================================
 // ORIENTATION ENGINE
 //=========================================
 
 let exhaustOnTop = true;
-
-
-        
-        
+  
 
         // Inicializar al cargar el documento con control de Splash Screen
      window.onload = function () {
@@ -2273,6 +2275,72 @@ console.error(error);
 
 }
 
+
+
+/* ==========================================================
+   BUILD-012A
+   PWA INSTALL ENGINE
+========================================================== */
+
+const installBtn =
+document.getElementById("install-button");
+
+window.addEventListener(
+
+"beforeinstallprompt",
+
+(event)=>{
+
+event.preventDefault();
+
+deferredPrompt=event;
+
+installBtn.classList.remove("hidden");
+
+});
+
+installBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+if(!deferredPrompt)return;
+
+deferredPrompt.prompt();
+
+const result=
+
+await deferredPrompt.userChoice;
+
+if(result.outcome==="accepted"){
+
+Analytics.pwaInstalled();
+
+}
+
+deferredPrompt=null;
+
+installBtn.classList.add("hidden");
+
+});
+
+window.addEventListener(
+
+"appinstalled",
+
+()=>{
+
+Analytics.pwaInstalled();
+
+installBtn.classList.add("hidden");
+
+deferredPrompt=null;
+
+});
+
+
+    
 /* ==========================================================
    BUILD-013
    PWA INSTALL EVENT
